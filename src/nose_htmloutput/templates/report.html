@@ -46,6 +46,9 @@ h3 strong, a.failed {
 .failed {
     color: #ff4136;
 }
+.skipped {
+    color: #fbf84a;
+}
 a.success {
     color: #3d9970;
 }
@@ -73,7 +76,7 @@ section:target .test-details {
                 <th>Class</th>
                 <th{% if stats.failures %} class="failed"{% endif %}>Fail</th>
                 <th{% if stats.errors %} class="failed"{% endif %}>Error</th>
-                <th>Skip</th>
+                <th{% if stats.skipped %} class="skipped"{% endif %}>Skip</th>
                 <th>Success</th>
                 <th>Total</th>
             </tr>
@@ -82,7 +85,7 @@ section:target .test-details {
                     <td>{{ class }}</td>
                     <td{% if group.stats.failures %} class="failed"{% endif %}>{{ group.stats.failures }}</td>
                     <td{% if group.stats.errors %} class="failed"{% endif %}>{{ group.stats.errors   }}</td>
-                    <td>{{ group.stats.skipped  }}</td>
+                    <td{% if group.stats.skipped %} class="skipped"{% endif %}>{{ group.stats.skipped  }}</td>
                     <td>{{ group.stats.passes   }}</td>
                     <td>{{ group.stats.total    }}</td>
                 </tr>
@@ -91,7 +94,7 @@ section:target .test-details {
                 <td><strong>Total</strong></td>
                 <td{% if stats.failures %} class="failed"{% endif %}>{{ stats.failures }}</td>
                 <td{% if stats.errors %} class="failed"{% endif %}>{{ stats.errors   }}</td>
-                <td>{{ stats.skipped  }}</td>
+                <td{% if stats.skipped %} class="skipped"{% endif %}>{{ stats.skipped  }}</td>
                 <td>{{ stats.passes   }}</td>
                 <td>{{ stats.total    }}</td>
             </tr>
@@ -109,9 +112,9 @@ section:target .test-details {
                             <h3>{{ test.name }}: <strong>{{ test.errtype }}</strong></h3>
                             <div class="test-details">
                                 <h4>Traceback</h4>
-                                <pre class="traceback">{{ test.tb }}</pre>
+                                <pre class="traceback">{{ test.tb | e }}</pre>
                                 <h4>Details</h4>
-                                <pre>{{ test.message }}</pre>
+                                <pre>{{ test.messagei | e }}</pre>
                             </div>
                         </section>
                         {% endif %}
@@ -127,7 +130,7 @@ section:target .test-details {
         <h2>{{ class }} ({{ group.stats.failures }} failures, {{ group.stats.errors }} errors)</h2>
         <ul>
             {% for test in group.tests %}
-                <li><a class="{% if test.failed %}failed" href="#{{ class }}:{{ test.name }}"{% else %}success"{% endif %}>{{ test.name }}</a></li>
+                <li><a class="{% if test.failed and test.type != 'skipped' %}skipped"{% elif test.failed %}failed" href="#{{ class }}:{{ test.name }}"{% else %}success"{% endif %}>{{ test.name }}</a></li>
             {% endfor %}
         </ul>
     </section>
