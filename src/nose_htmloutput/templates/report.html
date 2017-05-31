@@ -47,7 +47,7 @@ h3 strong, a.failed {
     color: #ff4136;
 }
 .skipped {
-    color: #fbf84a;
+    color: #d8d442;
 }
 a.success {
     color: #3d9970;
@@ -130,7 +130,7 @@ section:target .test-details {
         <h2>{{ class }} ({{ group.stats.failures }} failures, {{ group.stats.errors }} errors)</h2>
         <ul>
             {% for test in group.tests %}
-                <li><a class="{% if test.failed and test.type != 'skipped' %}skipped"{% elif test.failed %}failed" href="#{{ class }}:{{ test.name }}"{% else %}success"{% endif %}>{{ test.name }}</a></li>
+                <li><a class="{% if test.failed and test.type == 'skipped' %}skipped"{% elif test.failed %}failed" href="#{{ class }}:{{ test.name }}"{% else %}success"{% endif %}>{{ test.name }}</a></li>
             {% endfor %}
         </ul>
     </section>

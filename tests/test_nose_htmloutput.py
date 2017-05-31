@@ -19,7 +19,7 @@ def test_sample():
                     <td>test_sample</td>
                     <td class="failed">1</td>
                     <td class="failed">1</td>
-                    <td>1</td>
+                    <td class="skipped">1</td>
                     <td>1</td>
                     <td>4</td>
                 </tr>""" in output
@@ -51,7 +51,7 @@ def test_sample():
                 <td><strong>Total</strong></td>
                 <td class="failed">2</td>
                 <td class="failed">2</td>
-                <td>1</td>
+                <td class="skipped">1</td>
                 <td>4</td>
                 <td>9</td>
             </tr>""" in output
@@ -66,5 +66,6 @@ def test_sample():
     assert '<li><a class="failed" href="#test_sample.MainTestCase:test_b">test_b</a></li>' in output
     assert '<h2>test_sample (1 failures, 1 errors)</h2>' in output
     assert '<li><a class="success">test_a</a></li>' in output
+    assert '<li><a class="skipped">test_c</a></li>' in output
     assert '<li><a class="failed" href="#test_sample:test_b">test_b</a></li>' in output
     assert "<h2>test_sample.FailedSetupTestCase (0 failures, 1 errors)</h2>" in output
