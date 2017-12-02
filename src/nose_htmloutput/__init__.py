@@ -144,7 +144,7 @@ class HtmlOutput(Plugin):
         exc_type, exc_val, tb = err
         tb = ''.join(traceback.format_exception(
             exc_type,
-            exc_val if isinstance(exc_val, exc_type) else exc_type(exc_val),
+            exc_val if isinstance(exc_val, exc_type) else Exception('{}: {}'.format(exc_type, exc_val)),
             tb
         ))
         name = id_split(test.id())
